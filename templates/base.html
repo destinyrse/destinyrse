@@ -1,0 +1,65 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Destinyrse</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <!-- Favicons -->
+    <link href="{%static 'img/favicon.ico'%}" rel="icon">
+    <link href="{%static 'img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,600,600i,700,700i&display=swap"
+          rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{%static 'vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+    <link href="{%static 'vendor/aos/aos.css" rel="stylesheet'%}">
+    <link href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{%static 'vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+    <link href="{%static 'vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+    <link href="{%static 'vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+    <link href="{%static 'vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+            integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+            crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+            integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+            crossorigin="anonymous"></script>
+
+    <!-- Template Main CSS File -->
+    <link href="{%static 'css/style.css'%}" rel="stylesheet">
+    {%block styles%}
+    {%endblock styles%}
+</head>
+
+<body>
+{% block navbar%}{% endblock navbar%}
+{%block content%}
+
+{%endblock content%}
+
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{%static 'js/jquery.min.js'%}"></script>
+<script src="{%static 'vendor/aos/aos.js'%}"></script>
+<script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+<script src="{%static 'vendor/glightbox/js/glightbox.min.js'%}"></script>
+<script src="{%static 'vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+<script src="{%static 'vendor/purecounter/purecounter.js'%}"></script>
+<script src="{%static 'vendor/swiper/swiper-bundle.min.js'%}"></script>
+<script src="{%static 'vendor/waypoints/noframework.waypoints.js'%}"></script>
+
+<!-- Template Main JS File -->
+<script src="{%static 'js/main.js'%}"></script>
+{%block scripts%}
+{%endblock scripts%}
+
+</body>
+
+</html>

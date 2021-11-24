@@ -1,0 +1,111 @@
+{%extends 'dashboard/base.html'%}
+{%load static%}
+{%load humanize%}
+{%block content%}
+<div class="container">
+    <div class="py-3 text-center">
+        <h5><strong>{{test.name}}</strong></h5>
+        <h6 class="small">{{test.type}}</h6>
+        <h6 class="small">{{test.questions}} Questions</h6>
+
+    </div>
+    <div class="p-2 px-3 border border-info rounded  mb-3 d-flex justify-content-center" style="background:#f3f8fa;color:#1e4356">
+        <div >
+            <h3 class="p-0 m-0" style="font-weight:700!important;">
+                <label id="id_hours">00</label><label>:</label><label id="id_minutes">00</label><label>:</label><label id="id_seconds">00</label>
+            </h3>
+        </div>
+
+    </div>
+    <div class="py-2">
+        {%for q in questions%}
+        <div style="font-weight:bold"><p>{{q.number}}. {{q.question}}</p></div>
+        <div class="">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.id}}" id="{{q.id}}_option_one"
+                       value="{{q.option_one}}">
+                <label class="form-check-label" for="{{q.id}}_option_one">
+                    {{q.option_one}} &nbsp;&nbsp;
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.id}}" id="{{q.id}}_option_two"
+                       value="{{q.option_two}}">
+                <label class="form-check-label" for="{{q.id}}_option_two">
+                    {{q.option_two}}
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.id}}" id="{{q.id}}_option_three"
+                       value="{{q.option_three}}">
+                <label class="form-check-label" for="{{q.id}}_option_three">
+                    {{q.option_three}}
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.id}}" id="{{q.id}}_option_four"
+                       value="{{q.option_four}}">
+                <label class="form-check-label" for="{{q.id}}_option_four">
+                    {{q.option_four}}
+                </label>
+            </div>
+            {%if q.option_five%}
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.id}}" id="{{q.id}}_option_five"
+                       value="{{q.option_three}}">
+                <label class="form-check-label" for="{{q.id}}_option_five">
+                    {{q.option_five}}
+                </label>
+            </div>
+            {%endif%}
+
+            <hr>
+        </div>
+        {%endfor%}
+        <div class="text-center"><p class="mb-3 small">Answered <span id="answered">0</span> questions out of {{questions.count}}</p></div>
+        <div class="d-flex justify-content-center">
+
+            <button type="submit" class="btn btn-sm" style="background:#1e4356;color:white;width:150px" >
+                Submit
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+{%endblock content%}
+{%block scripts%}
+<script>
+var hoursLabel = document.getElementById("id_hours");
+var minutesLabel = document.getElementById("id_minutes");
+var secondsLabel = document.getElementById("id_seconds");
+var totalSeconds = 0;
+setInterval(setTime, 1000);
+
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+  hoursLabel.innerHTML = pad(parseInt(totalSeconds / 3600));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+$(':radio[type="radio"]').change(function(){
+    $('#answered').text($(':radio[type="radio"]:checked').length)
+    console.log(totalSeconds)
+})
+
+$()
+
+
+
+</script>
+{%endblock scripts%}

@@ -1,0 +1,44 @@
+{%extends 'dashboard/base.html'%}
+{%load static%}
+{%load humanize%}
+{%block content%}
+<div class="container">
+    <div class="py-3">
+        <h5><strong>NMC CBT Practice Questions</strong></h5>
+        <div class="d-flex justify-content-end">
+        </div>
+    </div>
+
+    <p><strong>All Published Tests</strong></p>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Test Name</th>
+            <th scope="col">No of Questions</th>
+            <th scope="col">Date Created</th>
+            <th scope="col" class="text-center">Begin Exam</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for test in published_tests%}
+        <tr>
+            <th scope="row">{{test.name}}</th>
+            <td>{{test.questions}}</td>
+            <td>{{test.created_on|naturaltime}}</td>
+            <td class="text-center"><a href="{%url 'take_test' test.id%}"><i class="fas fa-chalkboard-teacher"></i></a></td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+
+
+</div>
+
+
+
+{%endblock content%}
+{%block scripts%}
+<script>
+
+</script>
+{%endblock scripts%}

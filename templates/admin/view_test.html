@@ -1,0 +1,182 @@
+{%extends 'admin/base.html'%}
+{%load static%}
+{%load humanize%}
+{%block content%}
+<div class="container">
+    <div class="py-3 text-center">
+        <h5><strong>{{test.name}}</strong></h5>
+        <h6 class="small">{{test.type}}</h6>
+        <h6 class="small">{{test.questions}} Questions</h6>
+        <h6 class="small">{{test.created_on|naturaltime}} | {%if test.published %}Published{% else %} Not
+            Published {%endif%}</h6>
+        <div class="d-flex justify-content-between">
+            <form method="post">
+                {%csrf_token%}
+                {%if test.published%}
+                <input name="unpublish_test" value="unpublish" hidden>
+                <button class="btn btn-sm" type="submit" style="background: #8b0000;color:white;"><i
+                        class="fas fa-newspaper"></i> Unpublish
+                </button>
+                {%else%}
+                <input name="publish_test" value="publish" hidden>
+                <button class="btn btn-sm" type="submit" style="background: #1e4356;color:white;"><i
+                        class="fas fa-newspaper"></i> Publish Test
+                </button>
+                {%endif%}
+            </form>
+
+            <button class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#add_question"
+                    style="background: #1e4356;color:white;"><i class="fas fa-plus"></i> Add Question
+            </button>
+        </div>
+
+    </div>
+    <div class="py-2">
+        {%for q in questions%}
+        <div><p>{{q.number}}. {{q.question}}</p></div>
+        <div class="">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.id}}" id="{{q.id}}_option_one"
+                       value="{{q.option_one}}">
+                <label class="form-check-label" for="{{q.id}}_option_one">
+                    {{q.option_one}} {%if 'one' in q.correct_answer%} &nbsp;&nbsp;<i
+                        class="fas fa-check text-success"></i>{%endif%}
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.id}}" id="{{q.id}}_option_two"
+                       value="{{q.option_two}}">
+                <label class="form-check-label" for="{{q.id}}_option_two">
+                    {{q.option_two}} {%if 'two' in q.correct_answer%} &nbsp;&nbsp;<i
+                        class="fas fa-check text-success"></i>{%endif%}
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.id}}" id="{{q.id}}_option_three"
+                       value="{{q.option_three}}">
+                <label class="form-check-label" for="{{q.id}}_option_three">
+                    {{q.option_three}} {%if 'three' in q.correct_answer%} &nbsp;&nbsp;<i
+                        class="fas fa-check text-success"></i>{%endif%}
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.id}}" id="{{q.id}}_option_four"
+                       value="{{q.option_four}}">
+                <label class="form-check-label" for="{{q.id}}_option_four">
+                    {{q.option_four}} {%if 'four' in q.correct_answer%} &nbsp;&nbsp;<i
+                        class="fas fa-check text-success"></i>{%endif%}
+                </label>
+            </div>
+            {%if q.option_five%}
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.id}}" id="{{q.id}}_option_five"
+                       value="{{q.option_three}}">
+                <label class="form-check-label" for="{{q.id}}_option_five">
+                    {{q.option_five}} {%if 'five' in q.correct_answer%} &nbsp;&nbsp;<i
+                        class="fas fa-check text-success"></i>{%endif%}
+                </label>
+            </div>
+            {%endif%}
+            <div class="d-flex justify-content-between small p-0 m-0">
+                <button class="btn btn-default btn-sm"><a class="p-1 edit-question" href="{%url 'edit_question' q.id%}"><i
+                        class="fas fa-pencil-alt text-primary"></i></a></button>
+                <form class="delete_question" href="{%url 'edit_question' q.id%}" method="post">
+                    {%csrf_token%}
+                    <input hidden name="delete_question">
+                    <input hidden name="question_id" value="{{q.id}}">
+                    <button class="btn btn-default btn-sm"><i class="fas fa-trash text-danger"></i></button>
+                </form>
+            </div>
+            <hr>
+        </div>
+        {%endfor%}
+
+    </div>
+</div>
+
+<!-- Add Question Modal -->
+<div class="modal fade border-0" id="add_question" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0" style="color:#1e4356">
+                <h6 class="modal-title"><strong>Add Question to {{test.name}}</strong></h6>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body" style="color:#1e4356">
+                <form id="questions_form" method="post">
+                    {%csrf_token%}
+                    <div class="form-group mb-3">
+                        <label class="small">Question</label>
+                        <textarea class="form-control" rows="1" name="question" id="question" required></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="option_one" class="small">Option One</label>
+                        <textarea class="form-control" rows="1" name="option_one" id="option_one" required></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="option_two" class="small">Option Two</label>
+                        <textarea class="form-control" rows="1" name="option_two" id="option_two" required></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="option_three" class="small">Option Three</label>
+                        <textarea class="form-control" rows="1" name="option_three" id="option_three"
+                                  required></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="option_four" class="small">Option Four</label>
+                        <textarea class="form-control" rows="1" name="option_four" id="option_four"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="option_five" class="small">Option Five</label>
+                        <textarea class="form-control" rows="1" name="option_five" id="option_five"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="correct_answer" class="small">Choose Correct Option</label>
+                        <select class="form-control" id="correct_answer" name="correct_answer" required>
+                            <option value="option_one">Option One</option>
+                            <option value="option_two">Option Two</option>
+                            <option value="option_three">Option Three</option>
+                            <option value="option_four">Option Four</option>
+                            <option value="option_five">Option Five</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-center p-3">
+                        <button type="submit" class="btn btn-sm" style="background:#1e4356;color:white">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{%endblock content%}
+{%block scripts%}
+<script>
+    $('.trash_test').click(function(){
+        var test_id = $(this).attr('data-href');
+        $.ajax({
+            url: "{%url 'delete_test'%}",
+            method: "post",
+            data: {
+                "test_id": test_id,
+                "csrfmiddlewaretoken" : "{{csrf_token}}"
+            },
+            success: function(data){
+                if (data.deleted){
+                    window.location.reload();
+                }
+            }
+        });
+    });
+
+
+
+</script>
+{%endblock scripts%}

@@ -1,0 +1,190 @@
+{%extends 'base.html'%}
+{%load static%}
+{% block navbar%}{%include 'navbar.html'%}{% endblock navbar%}
+{%block content%}
+
+<section id="hero" class="d-flex justify-cntent-center align-items-center">
+    <div id="heroCarousel" class="container carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+            <div class="carousel-container">
+                <h2 class="animate__animated animate__fadeInDown">Welcome to <span>Destinyrse UK</span></h2>
+                <p class="animate__animated animate__fadeInUp">We are a team of professional Kenyan and UK nurses that
+                    assists Kenyan nurses transition their career into the UK. We will help you with your IELTS, CBT,
+                    and other exams as well as guide you through your application process. Click on the button below to
+                    learn about our services</p>
+                <a href="#main" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<main id="main">
+    <section class="service-details">
+        <div class="container">
+            <div class="section-title ">
+                <h2>Our Services</h2>
+                <p>Some of the services we offer</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="{% static 'img/IELTSTraining.png'%}" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#">IELTS Training</a></h5>
+                            <p class="card-text">Taking the English competence examination can be a difficult
+                                undertaking. That is why we offer top-notch training
+                                to ensure you pass the exam on your first try!</p>
+                            <div class="read-more"><a href="#"><i class="bi bi-arrow-right"></i> Read More</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="{% static 'img/NCK Verification.png'%}" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#">NCK Verification</a></h5>
+                            <p class="card-text">We will follow up
+                                with your documents to ensure that you are verified and certified by the Nursing Council
+                                of
+                                Kenya within hours!</p>
+                            <div class="read-more"><a href="#"><i class="bi bi-arrow-right"></i> Read More</a></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="{% static 'img/CBT Training.png'%}" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#">NMC CBT Training</a></h5>
+                            <p class="card-text">We understand that
+                                the Computer-Based Test by the Nursing and Midwifery Commission of the UK is daunting.
+                                This
+                                is why we will train you to pass it on your first try!</p>
+                            <div class="read-more"><a href="#"><i class="bi bi-arrow-right"></i> Read More</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="{% static 'img/CV Alignment.png'%}" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#">CV Alignment</a></h5>
+                            <p class="card-text">A Curriculum Vitae can
+                                increase of decrease your chances of getting hired by your next employer. Leave it to us
+                                to
+                                proofread, edit and align it in accordance with what UK employers prefer.</p>
+                            <div class="read-more"><a href="#"><i class="bi bi-arrow-right"></i> Read More</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pb-4">
+                <a href="{%url 'services'%}" class="btn-get-started animate__animated animate__fadeInUp" style="color:#68A4C4!important">More
+                    Services</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing section-bg" data-aos="fade-up">
+        <div class="container">
+
+            <div class="section-title ">
+                <h2>Book an Appointment</h2>
+                <p>Interested? Leave your details in the box below and we will contact you.</p>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-6 contact" style="max-width:3000px!important;margin-left:auto;margin-right:auto">
+                    <form method="post" role="form" class="php-email-form p-0"
+                          style="box-shadow:none!important">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name"
+                                       required>
+                            </div>
+                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                <input type="email" class="form-control" name="email" id="email"
+                                       placeholder="Your Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <input type="number" class="form-control" name="phonenumber" id="phonenumber"
+                                   placeholder="Phone Number"
+                                   required>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" style="width:100%!important">Book Now</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+
+        </div>
+    </section>
+    <section id="contact" class="contact" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+        <div class="container">
+            <div class="section-title ">
+                <h2>Contact Us</h2>
+                <p>Here is how to reach us</p>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6 m-0 p-0">
+
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <div class="info-box p-5">
+                                <i class="bx bx-map"></i>
+                                <h3>Our Address</h3>
+                                <p> Third Floor, Thika Gateway Plaza, Thika, Kenya </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-box p-5">
+                                <i class="bx bx-envelope"></i>
+                                <h3>Email Us</h3>
+                                <p>destinyrse001@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-box p-5">
+                                <i class="bx bx-phone-call"></i>
+                                <h3>Call Us</h3>
+                                <p>+254 724 370822</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15956.62461459377!2d37.0669012!3d-1.0438804!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb92283f93ce940c8!2sDestinyrse%20UK!5e0!3m2!1sen!2ske!4v1637426246726!5m2!1sen!2ske" class="w-100 h-100" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+</div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+</main>
+{%include 'footer.html'%}
+{%endblock content%}

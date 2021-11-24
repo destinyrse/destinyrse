@@ -1,0 +1,269 @@
+{%extends 'admin/base.html'%}
+{%load static%}
+{%load humanize%}
+{%block content%}
+<div class="container">
+    <div class="py-3">
+        <h5><strong>Upload NMC Exam Questions</strong></h5>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-sm mr-auto" data-bs-toggle="modal" data-bs-target="#start_upload"
+                    style="background: #1e4356;color:white;"><i class="fas fa-plus"></i> New Test
+            </button>
+        </div>
+    </div>
+
+    <p><strong>All Published Tests</strong></p>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Test Name</th>
+            <th scope="col">No of Questions</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">View</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for test in published_tests%}
+        <tr>
+            <th scope="row">{{test.name}}</th>
+            <td>{{test.questions}}</td>
+            <td>{{test.created_on|naturaltime}}</td>
+            <td><a href=""><i class="fas fa-eye"></i></a></td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+
+    <p class="pt-5"><strong>All Unpublished Tests</strong></p>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Test Name</th>
+            <th scope="col">No of Questions</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">View</th>
+            <th scope="col">Trash</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for test in unpublished_tests%}
+        <tr>
+            <th scope="row">{{test.name}}</th>
+            <td>{{test.questions}}</td>
+            <td>{{test.created_on|naturaltime}}</td>
+            <td class="text-center p-2"><a href="{%url 'view_test' test.id%}"><i class="fas fa-eye"></i></a></td>
+            <td class="text-center p-2"><a href="" data-href="{{test.id}}" class="trash_test"><i class="fas fa-trash-alt text-danger"></i></a></td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+</div>
+
+<!-- Test Modal -->
+<div class="modal fade border-0" id="start_upload" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0" style="color:#1e4356">
+                <h6 class="modal-title" id="" style=""><strong>Create New Test</strong></h6>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body" style="color:#1e4356">
+                <div>
+                    <div class="form-group mb-3">
+                        <label for="test_name" class="small">Test Name</label>
+                        <input type="text" class="form-control" id="test_name" placeholder="" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="test_type" class="small">Choose Test Type</label>
+                        <select class="form-control" id="test_type" required>
+                            <option selected value="Registered Nurse - Adult">RN - Adult</option>
+                            <option value="Registered Nurse - Adult">RN - Paediatric</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="test_name" class="small">Number of Questions</label>
+                        <input type="number" class="form-control" id="questions_number" placeholder="" required>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end p-3">
+                <button type="button" class="btn btn-sm" style="background:#1e4356;color:white" id="test_next">Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Questions Modal -->
+<div class="modal fade border-0" id="questions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0" style="color:#1e4356">
+                <h6 class="modal-title"><strong>Question <span id="current_question"></span> of <span
+                        id="questions_count"></span></strong></h6>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body" style="color:#1e4356">
+                <div id="questions_form">
+                    <div class="form-group mb-3">
+                        <label for="test_name" class="small">Question</label>
+                        <textarea class="form-control" rows="1" name="question" id="question"></textarea>
+                    </div>
+                    <hr>
+                    <div class="form-group mb-3">
+                        <label for="test_name" class="small">Option One</label>
+                        <textarea class="form-control" rows="1" name="option_one" id="option_one"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="test_name" class="small">Option Two</label>
+                        <textarea class="form-control" rows="1" name="option_two" id="option_two"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="test_name" class="small">Option Three</label>
+                        <textarea class="form-control" rows="1" name="option_three" id="option_three"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="test_name" class="small">Option Four</label>
+                        <textarea class="form-control" rows="1" name="option_four" id="option_four"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="test_name" class="small">Option Five</label>
+                        <textarea class="form-control" rows="1" name="option_five" id="option_five"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="test_type" class="small">Choose Correct Option</label>
+                        <select class="form-control" id="correct_answer" required>
+                            <option value="option_one">Option One</option>
+                            <option value="option_two">Option Two</option>
+                            <option value="option_three">Option Three</option>
+                            <option value="option_four">Option Four</option>
+                            <option value="option_five">Option Five</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between p-3">
+                <button type="button" class="btn btn-sm" style="background:#1e4356;color:white" id="question_previous">
+                    Prev
+                </button>
+                <button type="button" class="btn btn-sm" style="background:#1e4356;color:white" id="question_next">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock content%}
+{%block scripts%}
+<script>
+    $('#test_next').click(function(){
+        var test_name = $('#test_name').val();
+        var test_type = $('#test_type').val();
+        var test_questions = $('#questions_number').val();
+        $.ajax({
+            url: "{%url 'create_test'%}",
+            method: "post",
+            data: {
+                "name": test_name,
+                "test_type": test_type,
+                "questions": test_questions,
+                "csrfmiddlewaretoken" : "{{csrf_token}}"
+            },
+            success: function(data){
+                console.log(data.created)
+                if (data.created){
+                    localStorage.setItem("new_test_id", data.test_id)
+                    localStorage.setItem("new_test_questions", data.test_questions)
+                    localStorage.setItem("current_question", 1)
+                    $('#questions_count').text(data.test_questions);
+                    $('#current_question').text(1);
+                    $('#start_upload').modal('hide');
+                    $('#questions').modal('show');
+                }
+                else{
+                    console.log('test creation failed. reload page and try again')
+                }
+            }
+        });
+    });
+    $('#question_next').click(function(){
+        var question = $('#question').val();
+        var option_one = $('#option_one').val();
+        var option_two = $('#option_two').val();
+        var option_three = $('#option_three').val();
+        var option_four = $('#option_four').val();
+        var option_five = $('#option_five').val();
+        var correct_answer = $('#correct_answer').val();
+
+        $.ajax({
+            url: "{%url 'create_question'%}",
+            method: "post",
+            data: {
+                "question": question,
+                "option_one": option_one,
+                "option_two": option_two,
+                "option_three": option_three,
+                "option_four": option_four,
+                "option_five": option_five,
+                "correct_answer": correct_answer,
+                "questions": localStorage.getItem("new_test_questions"),
+                "test_id": localStorage.getItem("new_test_id"),
+                "csrfmiddlewaretoken" : "{{csrf_token}}"
+            },
+            success: function(data){
+                var next = parseInt(localStorage.getItem("current_question")) + 1
+                var questions = parseInt(localStorage.getItem("new_test_questions"))
+
+                if (next === questions){
+                    $('#questions_form').find('textarea')
+                        .each(function () {
+                            $(this).val('');
+                        });
+
+                    $('#questions_count').text(questions);
+                    $('#current_question').text(next);
+                    localStorage.setItem("current_question", next)
+                    $('#question_next').text('Finish');
+
+                }else if (next < questions){
+                    $('#questions_form').find('textarea')
+                        .each(function () {
+                            $(this).val('');
+                        });
+                    $('#questions_count').text(questions);
+                    $('#current_question').text(next);
+                    localStorage.setItem("current_question", next)
+                }else{
+                    $('#questions').modal('hide');
+                    window.location.reload();
+                }
+            }
+        });
+    });
+    $('.trash_test').click(function(){
+        var test_id = $(this).attr('data-href');
+        $.ajax({
+            url: "{%url 'delete_test'%}",
+            method: "post",
+            data: {
+                "test_id": test_id,
+                "csrfmiddlewaretoken" : "{{csrf_token}}"
+            },
+            success: function(data){
+                if (data.deleted){
+                    window.location.reload();
+                }
+            }
+        });
+    });
+
+
+</script>
+{%endblock scripts%}

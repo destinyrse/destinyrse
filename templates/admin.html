@@ -1,0 +1,215 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block styles%}
+<style>
+#sidebar a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+#sidebarCollapse{
+    color:#1e4356;
+    cursor:pointer;
+}
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+#sidebar {
+    min-width: 200px;
+    max-width: 200px;
+    background: #f3f8fa;
+    color: #1e4356;
+    transition: all 0.3s;
+}
+#sidebar.active {
+    margin-left: -200px;
+}
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #6d7fcc;
+}
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover {
+    color: #f3f8fa;
+    background: #8b0000;
+}
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #8b0000;
+}
+a[data-bs-toggle="collapse"] {
+    position: relative;
+}
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #f3f8fa;
+}
+ul.CTAs {
+    padding: 20px;
+}
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+a.download {
+    background: #fff;
+    color: #7386D5;
+}
+a.article,
+a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+#content {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -200px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #collapseText{
+        display:none;
+    }
+}
+</style>
+{%endblock styles%}
+{% block navbar%}
+{%include 'navbar.html'%}
+{% endblock navbar%}
+{%block content%}
+<main id="main">
+    <div class="wrapper">
+        <nav id="sidebar">
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#homeSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">IELTS Training</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#">Upload Tasks</a>
+                        </li>
+                        <li>
+                            <a href="#">Grade Tasks</a>
+                        </li>
+                        <li>
+                            <a href="#">View Scores</a>
+                        </li>
+                        <li>
+                            <a href="#">Student Grades</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false"
+                       class="dropdown-toggle">NCK Verification</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Paid To Destinyrse</a>
+                        </li>
+                        <li>
+                            <a href="#">Paid To NCK</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#nmc" data-bs-toggle="collapse" aria-expanded="false"
+                       class="dropdown-toggle">NMC</a>
+                    <ul class="collapse list-unstyled" id="nmc">
+                        <li>
+                            <a href="#">Account Opening Requests</a>
+                        </li>
+                        <li>
+                            <a href="#">Enrolled Students</a>
+                        </li>
+                        <li>
+                            <a href="#">Upload Questions</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">OET</a>
+                </li>
+                <li>
+                    <a href="#">TOEFL</a>
+                </li>
+                <li>
+                    <a href="#">CV Alignment</a>
+                </li>
+                <li>
+                    <a href="#">Interview Assistance</a>
+                </li>
+                <li>
+                    <a href="#">International Universities</a>
+                </li>
+                <li>
+                    <a href="#">Passport Application</a>
+                </li>
+
+                <li>
+                    <a href="{%url 'logout'%}">Logout</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="content">
+            <section class="breadcrumbs bg-white">
+                <div class="container">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div id="sidebarCollapse">
+                            <i class="fas fa-align-left"></i>
+                            <span id="collapseText">Menu</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+</main>
+{%include 'footer.html'%}
+{%endblock content%}
+{%block scripts%}
+<script>
+  $(document).ready(function(){
+    $("header").removeClass("header-transparent");
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+  });
+
+</script>
+{%endblock scripts%}
