@@ -25,7 +25,7 @@
             <th scope="row">{{test.name}}</th>
             <td>{{test.questions}}</td>
             <td>{{test.created_on|naturaltime}}</td>
-            <td class="text-center"><a href="{%url 'take_test' test.id%}"><i class="fas fa-chalkboard-teacher"></i></a></td>
+            <td class="text-center"><button class="btn btn-default btn-sm take_test" data-href="{%url 'take_test' test.id%}"><i class="fas fa-chalkboard-teacher text-primary" ></i></button></td>
         </tr>
         {%endfor%}
         </tbody>
@@ -34,11 +34,48 @@
 
 </div>
 
+<div class="modal fade border-0" id="not_authorized" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0" style="color:#1e4356">
+                <h6 class="modal-title" id="" style=""><strong>Not Authorized!</strong></h6>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body" style="color:#1e4356">
+                <div>
+                    Call <strong>+254 725 370822</strong> or <strong>+254 769 703150</strong> for assistance!
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 {%endblock content%}
 {%block scripts%}
 <script>
-
+$('.take_test').click(function(){
+    var route = $(this).attr('data-href');
+    var gaClientId = document.cookie.match(/_ga=(.+?);/)[1].split('.').slice(-2).join(".")
+    $.ajax({
+        url: "{%url 'update_ga_client_id'%}",
+        method: "post",
+        data: {
+            "ga_client_id": gaClientId,
+            "csrfmiddlewaretoken" : "{{csrf_token}}"
+        },
+        success: function(data){
+            if (data.updated){
+                window.location.href = route;
+            }else{
+                $('#not_authorized').modal('show');
+            }
+        }
+    });
+});
 </script>
 {%endblock scripts%}

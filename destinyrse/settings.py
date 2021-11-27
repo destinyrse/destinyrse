@@ -1,13 +1,12 @@
 from pathlib import Path
 import dj_database_url
-from decouple import config,Csv
+from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-MODE=config("MODE", default="dev")
+MODE = config("MODE", default="dev")
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-
 
 INSTALLED_APPS = [
     'app',
@@ -37,7 +36,7 @@ ROOT_URLCONF = 'destinyrse.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/'templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -51,7 +50,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'destinyrse.wsgi.application'
-
+AUTH_USER_MODEL = 'app.CustomUser'
 if config('MODE') == "dev":
     DATABASES = {
         'default': {
@@ -72,7 +71,7 @@ else:
         )
     }
 LOGOUT_REDIRECT_URL = 'home'
-LOGIN_URL='login'
+LOGIN_URL = 'login'
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
@@ -99,7 +98,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static',]
+STATICFILES_DIRS = [BASE_DIR / 'static', ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

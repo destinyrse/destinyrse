@@ -14,6 +14,7 @@ urlpatterns = [
     path('ajax/create_test/', app_views.create_test, name="create_test"),
     path('ajax/delete_test/', app_views.delete_test, name="delete_test"),
     path('ajax/create_question/', app_views.create_question, name="create_question"),
+    path('ajax/update_ga_client_id/', app_views.update_ga_client_id, name="update_ga_client_id"),
     path('dashboard/', app_views.dashboard, name="dashboard"),
     path('dashboard/nmc/nmc_practice_questions/', app_views.nmc_practice_questions, name="nmc_practice_questions"),
     path('dashboard/nmc/nmc_practice_questions/take_test/<int:id>/', app_views.take_test, name="take_test"),

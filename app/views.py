@@ -1,11 +1,9 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-
-from app.forms import NewUserForm
-from app.models import Test, Question
+from app.forms import CustomUserCreationForm
+from app.models import Test, Question, CustomUser
 
 
 def home(request):
@@ -18,11 +16,11 @@ def services(request):
 
 def register(request):
     if request.method == 'POST':
-        form = NewUserForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         user = form.save()
         login(request, user)
         return redirect("login")
-    form = NewUserForm()
+    form = CustomUserCreationForm()
     return render(request, 'register.html', locals())
 
 
@@ -31,9 +29,8 @@ def login_user(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password1')
-        if User.objects.filter(email=email).exists():
-            username = User.objects.get(email=email).username
-            user = authenticate(request, username=username, password=password)
+        if CustomUser.objects.filter(email=email).exists():
+            user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
                 if user.is_superuser:
@@ -56,12 +53,13 @@ def logout_view(request):
 def check_email(request):
     email = request.POST.get('email')
     data = {
-        "is_taken": User.objects.filter(email=email).exists()
+        "is_taken": CustomUser.objects.filter(email=email).exists()
     }
     return JsonResponse(data)
 
 
 def dashboard(request):
+    print(request.user.ga_client_id)
     return render(request, 'dashboard/index.html', locals())
 
 
@@ -208,3 +206,19 @@ def take_test(request, id):
     test = Test.objects.get(id=id)
     questions = Question.objects.filter(test=test).order_by('created_on')
     return render(request, 'dashboard/take_test.html', locals())
+
+
+def update_ga_client_id(request):
+    user=request.user
+    if user.ga_client_id == '' or user.ga_client_id is None:
+        user.ga_client_id = request.POST.get('ga_client_id')
+        user.save()
+        data = {
+            "updated": True
+        }
+    elif user.ga_client_id == request.POST.get('ga_client_id'):
+
+        data = {
+            "exists": False
+        }
+    return JsonResponse(data)
